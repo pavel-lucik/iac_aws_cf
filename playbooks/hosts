@@ -1,0 +1,6 @@
+[webservers]
+testserver ansible_host=127.0.0.1 ansible_port=2222
+
+[devtools]
+#testserver ansible_host=127.0.0.1 ansible_port=2222
+testserver ansible_host=18.184.154.172 ansible_port=22
