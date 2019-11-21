@@ -1,0 +1,10 @@
+---
+- name: check if Docker is installed
+  package_facts:
+    manager: "auto"
+
+- name: stop Docker service
+  service:
+    name: docker
+    state: stopped
+  when: "'docker-ce' in ansible_facts.packages"

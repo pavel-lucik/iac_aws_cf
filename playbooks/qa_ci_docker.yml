@@ -1,0 +1,26 @@
+---
+- hosts: devtools_server
+  tasks:
+    - name: generate key pair
+      shell: ssh-keygen -b 2048 -t rsa -f /home/ec2-user/.ssh/id_rsa -q -N ""
+      args:
+        creates: /home/ec2-user/.ssh/id_rsa
+
+    - name: test public key
+      shell: ssh-keygen -l -f /home/ec2-user/.ssh/id_rsa.pub
+      changed_when: false
+
+    - name: retrieve public key
+      shell: cat /home/ec2-user/.ssh/id_rsa.pub
+      register: master_public_key
+      changed_when: false
+
+- hosts: deploy
+  roles:
+     - { role: pavellucik.java8 } #this role installs java-1.8.0
+  become: True
+  tasks:
+    - name: add devtools public key to QA CI and Docker instances
+      authorized_key:
+        user: ec2-user
+        key: "{{ hostvars['devtools_server'].master_public_key.stdout }}"

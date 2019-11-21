@@ -1,0 +1,10 @@
+---
+- name: check if Docker is installed
+  package_facts:
+    manager: "auto"
+
+- name: start Docker service
+  service:
+    name: docker
+    state: started
+  when: "'docker-ce' in ansible_facts.packages"
