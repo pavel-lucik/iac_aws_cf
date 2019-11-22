@@ -1,17 +1,33 @@
 ---
 - hosts: devtools_server
   tasks:
+    - name: create .ssh directory for jenkins user
+      become_user: jenkins
+      become: true
+      file:
+        path: /var/lib/jenkins/.ssh
+        owner: jenkins
+        group: jenkins
+        mode: '700'
+        state: directory
+
     - name: generate key pair
-      shell: ssh-keygen -b 2048 -t rsa -f /home/ec2-user/.ssh/id_rsa -q -N ""
+      become_user: jenkins
+      become: true
+      shell: ssh-keygen -b 2048 -t rsa -f /var/lib/jenkins/.ssh/id_rsa -q -N ""
       args:
-        creates: /home/ec2-user/.ssh/id_rsa
+        creates: /var/lib/jenkins/.ssh/id_rsa
 
     - name: test public key
-      shell: ssh-keygen -l -f /home/ec2-user/.ssh/id_rsa.pub
+      become_user: jenkins
+      become: true
+      shell: ssh-keygen -l -f /var/lib/jenkins/.ssh/id_rsa.pub
       changed_when: false
 
     - name: retrieve public key
-      shell: cat /home/ec2-user/.ssh/id_rsa.pub
+      become_user: jenkins
+      become: true
+      shell: cat /var/lib/jenkins/.ssh/id_rsa.pub
       register: master_public_key
       changed_when: false
 

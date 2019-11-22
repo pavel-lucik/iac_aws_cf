@@ -3,7 +3,7 @@ testserver ansible_host=127.0.0.1 ansible_port=2222
 
 [devtools]
 #testserver ansible_host=127.0.0.1 ansible_port=2222
-devtools_server ansible_host=18.194.148.95 ansible_port=22
+devtools_server ansible_host=18.195.20.195 ansible_port=22
 #testserver ansible_host=localhost ansible_port=2224
 
 [qa]
@@ -17,3 +17,7 @@ qa_server ansible_host=54.93.107.224  ansible_port=22
 ci
 qa
 docker
+
+[deploy_jar:children]
+qa
+ci
