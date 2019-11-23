@@ -1,4 +1,4 @@
 ---
-  - hosts: devtools
+  - hosts: deploy_jar
     roles:
       - pavellucik.deploy_jar

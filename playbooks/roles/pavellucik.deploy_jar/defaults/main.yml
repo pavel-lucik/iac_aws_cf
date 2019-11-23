@@ -1,6 +1,6 @@
 ---
 # defaults file for pavellucik.deploy_jar
-nexus_server_ip: '18.195.20.195'
+nexus_server_ip: '3.120.34.154'
 nexus_server_port: 8081
 maven_repository: maven-public1
 maven_groupid: java
