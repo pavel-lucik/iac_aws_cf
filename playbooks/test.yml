@@ -1,4 +1,0 @@
----
-  - hosts: deploy_jar
-    roles:
-      - pavellucik.deploy_jar

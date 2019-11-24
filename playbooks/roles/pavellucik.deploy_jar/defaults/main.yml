@@ -11,4 +11,4 @@ java_app_group: appmgr
 java_app_user: jvmapps
 
 systemd_service_name: javapp
-javapp_service_port: 8090
+javapp_service_port: 8080
