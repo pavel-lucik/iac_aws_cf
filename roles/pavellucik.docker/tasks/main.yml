@@ -2,7 +2,6 @@
 # tasks file for pavellucik.docker
   - include: install.yml
     tags:
-      - never
       - docker_install
 
   - include: uninstall.yml

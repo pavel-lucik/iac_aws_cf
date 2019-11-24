@@ -5,4 +5,4 @@
    update_cache: yes
   loop:
     "{{ uninstall_old_list }}"
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' and ansible_distribution == 'CentOS'

@@ -31,12 +31,13 @@
       register: master_public_key
       changed_when: false
 
-- hosts: deploy
+- hosts: deploy_jar
   roles:
-     - { role: pavellucik.java8 } #this role installs java-1.8.0
+     - { role: pavellucik.java8 } #install java-1.8.0
+     - { role: pavellucik.docker } #install Docker as systemd service
   become: true
   tasks:
-    - name: add devtools public key to QA CI and Docker instances
+    - name: add devtools public key to QA CI instances
       authorized_key:
         user: ec2-user
         key: "{{ hostvars['devtools_server'].master_public_key.stdout }}"
@@ -44,4 +45,9 @@
 - hosts: docker
   become: true
   roles:
-    - { role: pavellucik.docker }
+    - { role: pavellucik.docker } #install Docker as systemd service
+  tasks:
+    - name: add devtools public key to Docker instances
+      authorized_key:
+        user: ec2-user
+        key: "{{ hostvars['devtools_server'].master_public_key.stdout }}"

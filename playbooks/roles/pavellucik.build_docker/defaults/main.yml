@@ -7,8 +7,7 @@ maven_groupid: java
 maven_artifactid: spring-boot-smoke-test-web-ui
 maven_extention: jar
 
-java_app_group: appmgr
-java_app_user: jvmapps
+docker_group: docker
+docker_user: docker
 
-systemd_service_name: javapp
 javapp_service_port: 8080
