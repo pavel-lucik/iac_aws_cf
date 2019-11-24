@@ -34,9 +34,14 @@
 - hosts: deploy
   roles:
      - { role: pavellucik.java8 } #this role installs java-1.8.0
-  become: True
+  become: true
   tasks:
     - name: add devtools public key to QA CI and Docker instances
       authorized_key:
         user: ec2-user
         key: "{{ hostvars['devtools_server'].master_public_key.stdout }}"
+
+- hosts: docker
+  become: true
+  roles:
+    - { role: pavellucik.docker }

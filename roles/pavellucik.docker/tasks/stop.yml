@@ -3,8 +3,14 @@
   package_facts:
     manager: "auto"
 
-- name: stop Docker service
+- name: stop Docker service on CentOS
   service:
     name: docker
     state: stopped
   when: "'docker-ce' in ansible_facts.packages"
+
+- name: stop Docker service on Amazon Linux2
+  service:
+    name: docker
+    state: stopped
+  when: "'docker' in ansible_facts.packages"

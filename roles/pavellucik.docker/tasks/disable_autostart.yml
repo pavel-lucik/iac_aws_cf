@@ -3,8 +3,14 @@
   package_facts:
     manager: "auto"
 
-- name: disable Docker service autostart
+- name: disable Docker service autostart on CentOS
   service:
     name: docker
     enabled: no
   when: "'docker-ce' in ansible_facts.packages"
+
+- name: disable Docker service autostart on Amazon Linux2
+  service:
+    name: docker
+    enabled: no
+  when: "'docker' in ansible_facts.packages"

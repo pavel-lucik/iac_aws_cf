@@ -3,8 +3,14 @@
   package_facts:
     manager: "auto"
 
-- name: enable Docker service autostart
+- name: enable Docker service autostart on CentOS
   service:
     name: docker
     enabled: yes
   when: "'docker-ce' in ansible_facts.packages"
+
+- name: enable Docker service autostart on Amazon Linux2
+  service:
+    name: docker
+    enabled: yes
+  when: "'docker' in ansible_facts.packages"
