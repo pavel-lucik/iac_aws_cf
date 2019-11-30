@@ -1,10 +1,45 @@
 ---
 - name: copy Dockerfile
+  become_user: docker
+  become: true
   template:
     src: Dockerfile.j2
     dest: /home/{{ docker_user }}/Dockerfile
 
-- name: build docker image
+- name: copy daemon.json
+  become: true
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+
+- name: restart docker service
+  become: true
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
+
+- name: Log into Nexus docker registry
   become_user: docker
   become: true
-  command: "docker build -f /home/{{ docker_user }}/Dockerfile ."
+  docker_login:
+    registry: http://{{ nexus_server_ip }}:{{ nexus_server_docker_port }}
+    username: "{{ maven_login }}"
+    password: "{{ maven_password }}"
+    reauthorize: yes
+
+- name: Build image and with build args
+  become_user: docker
+  become: true
+  docker_image:
+    name: spring-boot-smoke-test-web-ui
+    repository: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/javapp"
+    tag: "{{ build_number }}"
+    build:
+      path: /home/{{ docker_user }}/
+    source: build
+
+# - name: build docker image
+#   become_user: docker
+#   become: true
+#   command: "docker build -f /home/{{ docker_user }}/Dockerfile ."

@@ -1,8 +1,11 @@
 ---
 # defaults file for pavellucik.deploy_jar
-nexus_server_ip: '52.59.16.101'
+nexus_server_ip: '172.31.46.242'
 nexus_server_port: 8081
+nexus_server_docker_port: 5000
 maven_repository: maven-public1
+maven_login: admin
+maven_password: securepassword
 maven_groupid: java
 maven_artifactid: spring-boot-smoke-test-web-ui
 maven_extention: jar
@@ -11,3 +14,5 @@ docker_group: docker
 docker_user: docker
 
 javapp_service_port: 8080
+
+build_number: "{{ lookup('file', '/var/lib/jenkins/build_number.txt', errors='warn') }}"

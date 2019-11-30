@@ -51,3 +51,13 @@
       authorized_key:
         user: ec2-user
         key: "{{ hostvars['devtools_server'].master_public_key.stdout }}"
+
+    - name: install pip2 to enable docker module for Ansible
+      yum:
+        name: pip2
+        update_cache: yes
+        state: present
+
+    - name: install docker module for Ansible
+      pip:
+        name: docker
