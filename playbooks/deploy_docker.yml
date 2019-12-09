@@ -1,0 +1,5 @@
+---
+  - hosts: "{{ host | default('docker') }}"
+    become: true
+    roles:
+      - pavellucik.deploy_docker

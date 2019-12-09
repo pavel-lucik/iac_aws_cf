@@ -1,0 +1,11 @@
+---
+# defaults file for pavellucik.deploy_docker
+nexus_server_ip: '172.31.46.242'
+nexus_server_docker_port: 5000
+maven_login: admin
+maven_password: securepassword
+docker_group: docker
+docker_user: docker
+docker_image_name: javapp
+javapp_service_port: 8080
+javapp_service_deploy_port: 8082

@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Role for building docker image using openjdk:8-jre-alpine and latest maven artifact from the Nexus repository. Then the image is being pushed into Nexus DTR with 'latest' and 'build_number' tags.
+Role for deploying docker container with latest maven artifact from Nexus docker registry
 
 Requirements
 ------------
@@ -14,19 +14,14 @@ Role Variables
 Before use this role you should define variables in defaults/main.yml:
 
 nexus_server_ip:
-nexus_server_port:
 nexus_server_docker_port:
-maven_repository:
 maven_login:
 maven_password:
-maven_groupid:
-maven_artifactid:
-maven_extention:
 docker_group:
 docker_user:
 docker_image_name:
 javapp_service_port:
-build_number
+javapp_service_deploy_port:
 
 Example Playbook
 ----------------

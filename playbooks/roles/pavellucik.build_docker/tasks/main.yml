@@ -1,6 +1,6 @@
 ---
 - name: copy Dockerfile
-  become_user: docker
+  become_user: "{{ docker_user }}"
   become: true
   template:
     src: Dockerfile.j2
@@ -20,7 +20,7 @@
     name: docker
 
 - name: log into Nexus docker registry
-  become_user: docker
+  become_user: "{{ docker_user }}"
   become: true
   docker_login:
     registry: http://{{ nexus_server_ip }}:{{ nexus_server_docker_port }}
@@ -29,11 +29,10 @@
     reauthorize: yes
 
 - name: build image and with build args and push to Nexus docker registry
-  become_user: docker
+  become_user: "{{ docker_user }}"
   become: true
   docker_image:
-    name: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/javapp"
-    #repository: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/javapp"
+    name: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/{{ docker_image_name }}"
     tag: "{{ build_number }}"
     push: yes
     build:
@@ -43,11 +42,11 @@
     source: build
 
 - name: add tag latest to the last successfully built image
-  become_user: docker
+  become_user: "{{ docker_user }}"
   become: true
   docker_image:
-    name: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/javapp:{{ build_number }}"
-    repository: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/javapp:latest"
+    name: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/{{ docker_image_name }}:{{ build_number }}"
+    repository: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/{{ docker_image_name }}:latest"
     force_tag: yes
     push: yes
     state: present

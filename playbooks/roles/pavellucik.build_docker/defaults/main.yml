@@ -1,5 +1,5 @@
 ---
-# defaults file for pavellucik.deploy_jar
+# defaults file for pavellucik.build_docker
 nexus_server_ip: '172.31.46.242'
 nexus_server_port: 8081
 nexus_server_docker_port: 5000
@@ -12,6 +12,7 @@ maven_extention: jar
 
 docker_group: docker
 docker_user: docker
+docker_image_name: javapp
 
 javapp_service_port: 8080
 

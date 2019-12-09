@@ -1,0 +1,46 @@
+---
+# tasks file for pavellucik.deploy_docker
+
+- name: copy daemon.json
+  become: true
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    force: no
+
+- name: restart docker service
+  become: true
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
+
+- name: log into Nexus docker registry
+  become_user: "{{ docker_user }}"
+  become: true
+  docker_login:
+    registry: http://{{ nexus_server_ip }}:{{ nexus_server_docker_port }}
+    username: "{{ maven_login }}"
+    password: "{{ maven_password }}"
+    reauthorize: yes
+
+- name: forcing pull of the latest docker image
+  become_user: "{{ docker_user }}"
+  become: true
+  docker_image:
+    name: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/{{ docker_image_name }}:latest"
+    state: present
+    force: yes
+    source: pull
+
+- name: restart a container
+  become_user: "{{ docker_user }}"
+  become: true
+  docker_container:
+    name: javapp
+    image: "{{ nexus_server_ip }}:{{ nexus_server_docker_port }}/{{ docker_image_name }}:latest"
+    state: started
+    restart: yes
+    restart_policy: unless-stopped
+    published_ports:
+     - "{{ javapp_service_deploy_port }}:{{ javapp_service_port }}"

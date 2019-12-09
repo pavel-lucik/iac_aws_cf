@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Role for deplyment of the latest artifact from Nexus repository to QA and CI environment
+Role for deployment of the latest artifact from Nexus repository to QA and CI environment
 
 Requirements
 ------------
